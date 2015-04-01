@@ -1,19 +1,11 @@
-
+////////////////////////////////////////////////////////////////////////////////
+//
+// (C) Andy Thomason 2012-2014 - Modular Framework for OpenGLES2 rendering on multiple platforms.
+//
+// OpenGL Learning Project - Create a window
 
 namespace octet {
 	/// Scene containing a box with octet.
-
-	void sendDataToOpenGL()
-	{
-
-
-	}
-
-	void installShaders()
-	{
-
-
-	}
 
 	class openGL_LearningProject : public app {
 
@@ -26,9 +18,6 @@ namespace octet {
 		void app_init()
 		{
 
-			sendDataToOpenGL();
-			installShaders();
-
 		}
 
 		/// this is called to draw the world
@@ -38,8 +27,8 @@ namespace octet {
 			get_viewport_size(vx, vy);
 
 			/// set a viewport - includes whole window area
-			glClearColor(1, 0, 0, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClearColor(1, 0, 0, 1);       // this line sets the color... R G B A
+			glClear(GL_COLOR_BUFFER_BIT);   // openGl clear the buffer
 
 		}
 	};
