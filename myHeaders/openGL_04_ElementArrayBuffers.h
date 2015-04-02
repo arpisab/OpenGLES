@@ -2,7 +2,7 @@
 //
 // (C) Andy Thomason 2012-2014 - Modular Framework for OpenGLES2 rendering on multiple platforms.
 //
-// OpenGL Learning Project - Create Two Triangles
+// OpenGL Learning Project - Element Array Buffers
 
 namespace octet {
 	/// Scene containing a box with octet.
@@ -17,25 +17,21 @@ namespace octet {
 		/// this is called once OpenGL is initialized
 		void app_init()
 		{
-			GLfloat verts[] =
+			GLfloat verts[] =  // we define the position of the vertices with this array
 			{
-				0.0f, 0.0f,
-				1.0f, 1.0f,
-				-1.0f, 1.0f,
-
-				0.0f, 0.0f,
-				-1.0f, -1.0f,
-				1.0f, -1.0f,
+				0.0f, 0.0f,    // 0
+				1.0f, 1.0f,    // 1
+				-1.0f, 1.0f,   // 2
+				-1.0f, -1.0f,  // 3
+				1.0f, -1.0f,   // 4
 
 			};
 
-			GLuint myBufferID;
-			glGenBuffers(1, &myBufferID);  // Creates the Buffer Object - BO
-			glBindBuffer(GL_ARRAY_BUFFER, myBufferID);  // Binds the buffer to the binding point
+			GLuint vertexBufferID;
+			glGenBuffers(1, &vertexBufferID);  // Creates the Buffer Object - BO
+			glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);  // Binds the buffer to the binding point
 
-			glBufferData(GL_ARRAY_BUFFER,
-				sizeof(verts),
-				verts,
+			glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts,
 				GL_STATIC_DRAW);   //  stores the verts array in a array down to the Graphic Card
 
 			glEnableVertexAttribArray(0);  //  enables the attribute atrray or the data that is copied down to the buffer 
@@ -44,6 +40,15 @@ namespace octet {
 			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0); // this function decribes the data to openGL
 			//position attr, numb of elements, type, normalise (GL_FALSE means don't touch the data), 
 
+
+			/// Below we create Indices to save a vertex for two triangles
+
+			GLushort indeces[] = { 0, 1, 2, 0, 3, 4 }; // we define how our position are connecte using thir array
+			GLuint indexBufferID;
+			glGenBuffers(1, &indexBufferID);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces),
+				indeces, GL_STATIC_DRAW);
 
 		}
 
@@ -56,10 +61,8 @@ namespace octet {
 
 			glViewport(0, 0, vx, vy); // this func. sets what area of the window we want to render, in this case it just makes the window resizeble
 
-			glDrawArrays(GL_TRIANGLES, 0, 6); // this func. draws
-			//(GL_TRIANGLES is what will be drawn, 0 incates at what triangles to start, 3 tells the number of vertices to draw per triamgles
-
-
+			// this func. draws
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 
 		}
 	};
