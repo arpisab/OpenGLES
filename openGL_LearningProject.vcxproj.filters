@@ -428,6 +428,8 @@
       <Filter>containers</Filter>
     </ClInclude>
     <ClInclude Include="openGL_LearningProject.h" />
+    <ClInclude Include="shader_R1.h" />
+    <ClInclude Include="shader_R0.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\mesh_builder.inl">

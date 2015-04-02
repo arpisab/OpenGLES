@@ -216,6 +216,8 @@
     <ClInclude Include="..\..\shaders\shaders.h" />
     <ClInclude Include="..\..\shaders\texture_shader.h" />
     <ClInclude Include="openGL_LearningProject.h" />
+    <ClInclude Include="shader_R0.h" />
+    <ClInclude Include="shader_R1.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\mesh_builder.inl" />

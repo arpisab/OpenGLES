@@ -2,7 +2,7 @@
 //
 // (C) Andy Thomason 2012-2014 - Modular Framework for OpenGLES2 rendering on multiple platforms.
 //
-// OpenGL Learning Project - 09 - Compiling GLSL Shaders and passing data from Vertex to Fragment Shader
+// OpenGL Learning Project - Compiling GLSL Shaders and passing data from Vertex to Fragment Shader
 
 
 #include "shader_R1.h"
@@ -16,7 +16,11 @@ namespace octet {
 	{
 		GLfloat verts[] =  // we define the position of the vertices with this array
 		{
-			0.0f, 1.0f,
+			0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+			1.0f, 1.0f,
+			1.0f, 0.0f, 0.0f,
+			-1.0f, 1.0f,
 			1.0f, 0.0f, 0.0f,
 			-1.0f, -1.0f,
 			1.0f, 0.0f, 0.0f,

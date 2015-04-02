@@ -2,21 +2,24 @@
 //
 // (C) Andy Thomason 2012-2014 - Modular Framework for OpenGLES2 rendering on multiple platforms.
 //
-// OpenGL Learning Project - 09 - Compiling GLSL Shaders and passing data from Vertex to Fragment Shader
+// OpenGL Learning Project - Shader Hello World
 
 
-#include "shader_R1.h"
+#include "shader_R0.h"
 
 using namespace std;
 
 namespace octet {
 
-
 	void sendDataToOpenGL()
 	{
 		GLfloat verts[] =  // we define the position of the vertices with this array
 		{
-			0.0f, 1.0f,
+			0.0f, 0.0f,
+			1.0f, 0.0f, 0.0f,
+			1.0f, 1.0f,
+			1.0f, 0.0f, 0.0f,
+			-1.0f, 1.0f,
 			1.0f, 0.0f, 0.0f,
 			-1.0f, -1.0f,
 			1.0f, 0.0f, 0.0f,
@@ -57,27 +60,6 @@ namespace octet {
 
 	void installShaders()
 	{
-		GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
-		GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
-
-
-		const char* adapter[1]; // adapter is a pointer to the array 1 - the array contains pointers to characher strings
-		adapter[0] = vertexShaderCode;
-		glShaderSource(vertexShaderID, 1, adapter, 0);
-		adapter[0] = fragmentShaderCode;
-		glShaderSource(fragmentShaderID, 1, adapter, 0);
-
-		glCompileShader(vertexShaderID);
-		glCompileShader(fragmentShaderID);
-
-		GLuint programID = glCreateProgram();
-		glAttachShader(programID, vertexShaderID);
-		glAttachShader(programID, fragmentShaderID);
-		glLinkProgram(programID);
-
-		glUseProgram(programID);
-
-
 
 	}
 
