@@ -52,8 +52,8 @@ namespace octet {
 			glEnableVertexAttribArray(1);  
 			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (char*)(sizeof(float) * 2));
 
-			/// Below we create Indices to save a vertex for two triangles
 			
+			/// Below we create Indices to save a vertex for two triangles
 			GLushort indeces[] = { 0,1,2, 0,3,4 }; // we define how our position are connecte using thir array
 			GLuint indexBufferID;
 			glGenBuffers(1, &indexBufferID);
