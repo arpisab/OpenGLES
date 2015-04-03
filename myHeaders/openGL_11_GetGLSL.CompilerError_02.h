@@ -2,7 +2,7 @@
 //
 // (C) Andy Thomason 2012-2014 - Modular Framework for OpenGLES2 rendering on multiple platforms.
 //
-// OpenGL Learning Project - 10 - Get GLSL Compiler Error - 01
+// OpenGL Learning Project - 10 - Get GLSL Compiler Error 02
 
 
 
@@ -58,6 +58,28 @@ namespace octet {
 			indeces, GL_STATIC_DRAW);
 	}
 
+	/// Shader compiler checker - version 02
+	bool checkShaderStatus(GLuint shaderID)
+	{
+		GLint compileStatus;
+		glGetShaderiv(shaderID, GL_COMPILE_STATUS, &compileStatus);  //GLGetShaderiv - iv stands for integer vector
+		if (compileStatus != GL_TRUE)
+		{
+			GLint infoLogLenght;
+			glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &infoLogLenght);
+			GLchar* buffer = new GLchar[infoLogLenght];
+
+			GLsizei bufferSize;
+			glGetShaderInfoLog(shaderID, infoLogLenght, &bufferSize, buffer);
+			std::cout << buffer << std::endl;
+
+			delete[] buffer;
+			return false;
+		}
+		return true;
+	}
+
+
 	void installShaders()
 	{
 		GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -73,26 +95,12 @@ namespace octet {
 		glCompileShader(vertexShaderID);
 		glCompileShader(fragmentShaderID);
 
-
-
-		/// Shader compiler checker - version 01
-		GLint compileStatus;
-		glGetShaderiv(vertexShaderID, GL_COMPILE_STATUS, &compileStatus);  //GLGetShaderiv - iv stands for integer vector
-		if (compileStatus != GL_TRUE)
+		/// Shader compiler checker
+		if (!checkShaderStatus(vertexShaderID) || !checkShaderStatus(fragmentShaderID))
 		{
-			GLint infoLogLenght;
-			glGetShaderiv(vertexShaderID, GL_INFO_LOG_LENGTH, &infoLogLenght);
-			GLchar* buffer = new GLchar[infoLogLenght];
-
-			GLsizei bufferSize;
-			glGetShaderInfoLog(vertexShaderID, infoLogLenght, &bufferSize, buffer);
-			std::cout << buffer << std::endl;
-
-			delete[] buffer;
-
-		}
-
-		/// - end
+			return;
+		};
+		///	
 
 
 		GLuint programID = glCreateProgram();

@@ -2,7 +2,7 @@
 //
 // (C) Andy Thomason 2012-2014 - Modular Framework for OpenGLES2 rendering on multiple platforms.
 //
-// OpenGL Learning Project - 10 - Get GLSL Compiler Error - 01
+// OpenGL Learning Project - 12 - Get GLSL Linker Error
 
 
 
@@ -58,6 +58,50 @@ namespace octet {
 			indeces, GL_STATIC_DRAW);
 	}
 
+	/// Shader compiler checker - version 02
+	bool checkShaderStatus(GLuint shaderID)
+	{
+		GLint compileStatus;
+		glGetShaderiv(shaderID, GL_COMPILE_STATUS, &compileStatus);  //GLGetShaderiv - iv stands for integer vector
+		if (compileStatus != GL_TRUE)
+		{
+			GLint infoLogLenght;
+			glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &infoLogLenght);
+			GLchar* buffer = new GLchar[infoLogLenght];
+
+			GLsizei bufferSize;
+			glGetShaderInfoLog(shaderID, infoLogLenght, &bufferSize, buffer);
+			std::cout << buffer << std::endl;
+
+			delete[] buffer;
+			return false;
+		}
+		return true;
+	}
+
+
+	/// Linker checker
+	bool checkProgramStatus(GLuint programID)
+	{
+		GLint linkStatus;
+		glGetProgramiv(programID, GL_LINK_STATUS, &linkStatus);  //GLGetShaderiv - iv stands for integer vector
+		if (linkStatus != GL_TRUE)
+		{
+			GLint infoLogLenght;
+			glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &infoLogLenght);
+			GLchar* buffer = new GLchar[infoLogLenght];
+
+			GLsizei bufferSize;
+			glGetProgramInfoLog(programID, infoLogLenght, &bufferSize, buffer);
+			std::cout << buffer << std::endl;
+
+			delete[] buffer;
+			return false;
+		}
+		return true;
+	}
+
+
 	void installShaders()
 	{
 		GLuint vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -73,32 +117,26 @@ namespace octet {
 		glCompileShader(vertexShaderID);
 		glCompileShader(fragmentShaderID);
 
-
-
-		/// Shader compiler checker - version 01
-		GLint compileStatus;
-		glGetShaderiv(vertexShaderID, GL_COMPILE_STATUS, &compileStatus);  //GLGetShaderiv - iv stands for integer vector
-		if (compileStatus != GL_TRUE)
+		/// Shader compiler error checker
+		if (!checkShaderStatus(vertexShaderID) || !checkShaderStatus(fragmentShaderID))
 		{
-			GLint infoLogLenght;
-			glGetShaderiv(vertexShaderID, GL_INFO_LOG_LENGTH, &infoLogLenght);
-			GLchar* buffer = new GLchar[infoLogLenght];
-
-			GLsizei bufferSize;
-			glGetShaderInfoLog(vertexShaderID, infoLogLenght, &bufferSize, buffer);
-			std::cout << buffer << std::endl;
-
-			delete[] buffer;
-
-		}
-
-		/// - end
+			return;
+		};
+		///	
 
 
 		GLuint programID = glCreateProgram();
 		glAttachShader(programID, vertexShaderID);
 		glAttachShader(programID, fragmentShaderID);
 		glLinkProgram(programID);
+
+
+		/// Linker error checker
+		if (!checkProgramStatus(programID))
+		{
+			return;
+		};
+		///	
 
 		glUseProgram(programID);
 

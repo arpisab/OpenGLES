@@ -438,5 +438,7 @@
     <None Include="..\..\resources\resources.inl">
       <Filter>resources</Filter>
     </None>
+    <None Include="shader.vs" />
+    <None Include="shader.fs" />
   </ItemGroup>
 </Project>
