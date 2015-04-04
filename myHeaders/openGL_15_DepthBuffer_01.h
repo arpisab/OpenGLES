@@ -2,11 +2,13 @@
 //
 // (C) Andy Thomason 2012-2014 - Modular Framework for OpenGLES2 rendering on multiple platforms.
 //
-// OpenGL Learning Project - 18 - Sending Triangles in Parts Using glBufferSubData
+// OpenGL Learning Project - 15 - Depth Buffer
+
 
 
 #include <iostream>
 #include <fstream>
+#include "shader_R1.h"
 
 
 using namespace std;
@@ -16,23 +18,21 @@ namespace octet {
 
 	void sendDataToOpenGL()
 	{
-		const float RED_TRIANGLE_Z = 0.5f;   // -1.0 is as close to our face as possible
-		const float BLUE_TRIANGLE_Z = -0.25f; // 0.9  is as far to our face as possible
 		GLfloat verts[] =  // we define the position of the vertices with this array
 		{
-			-1.0f, -1.0f, RED_TRIANGLE_Z,
+			-1.0f, -1.0f,
 			1.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, -1.0f,
+			0.0f, 1.0f,
 			1.0f, 0.0f, 0.0f,
-			1.0f, -1.0f, RED_TRIANGLE_Z,
+			1.0f, -1.0f,
 			1.0f, 0.0f, 0.0f,
 
-			-1.0f, 1.0f, BLUE_TRIANGLE_Z,
+			-1.0f, 1.0f,
 			0.0f, 0.0f, 1.0f,
-			0.0f, -1.0f, BLUE_TRIANGLE_Z,
+			0.0f, -1.0f,
 			0.0f, 0.0f, 1.0f,
-			1.0f, 1.0f, BLUE_TRIANGLE_Z,
-			0.0f, 1.0f, 0.0f,
+			1.0f, 1.0f,
+			0.0f, 0.0f, 1.0f,
 
 		};
 
@@ -46,7 +46,7 @@ namespace octet {
 		glEnableVertexAttribArray(0);  //  enables the attribute atrray or the data that is copied down to the buffer 
 		//  to go throught the process graphic pipeline
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0); // this function decribes the data to openGL
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0); // this function decribes the data to openGL
 		// position attribute -> zero is the starting point, numb of elements, 
 		// type, normalise (GL_FALSE means don't touch the data),
 		// stride is the distance in bytes between tose vertices 
@@ -54,7 +54,7 @@ namespace octet {
 
 		/// now we need to describe the colour atttribute to openGL
 		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (char*)(sizeof(float) * 3));
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (char*)(sizeof(float) * 2));
 
 
 		/// Below we create Indices to save a vertex for two triangles
@@ -108,7 +108,6 @@ namespace octet {
 		return true;
 	}
 
-	/// 
 	std::string readShaderCode(const char* fileName)
 	{
 		ifstream myInput(fileName);
@@ -128,7 +127,7 @@ namespace octet {
 		GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
 		const char* adapter[1]; // adapter is a pointer to the array 1 - the array contains pointers to characher strings
-		std::string temp = readShaderCode("shader02.vs");
+		std::string temp = readShaderCode("shader.vs");
 		adapter[0] = temp.c_str(); // c_str stands for C style string
 		glShaderSource(vertexShaderID, 1, adapter, 0);
 		temp = readShaderCode("shader.fs");
@@ -175,7 +174,6 @@ namespace octet {
 		/// this is called once OpenGL is initialized
 		void app_init()
 		{
-			glEnable(GL_DEPTH_TEST);
 			sendDataToOpenGL();
 			installShaders();
 
@@ -187,9 +185,6 @@ namespace octet {
 			int vx = 0, vy = 0;
 			get_viewport_size(vx, vy);
 
-
-
-			glClear(GL_DEPTH_BUFFER_BIT);
 
 			glViewport(0, 0, vx, vy); // this func. sets what area of the window we want to render, in this case it just makes the window resizeble
 

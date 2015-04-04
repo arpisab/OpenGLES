@@ -2,11 +2,12 @@
 //
 // (C) Andy Thomason 2012-2014 - Modular Framework for OpenGLES2 rendering on multiple platforms.
 //
-// OpenGL Learning Project - 18 - Sending Triangles in Parts Using glBufferSubData
+// OpenGL Learning Project - 16 - Depth Buffer. Enable the depth buffer
 
 
 #include <iostream>
 #include <fstream>
+#include "shader_R1.h"
 
 
 using namespace std;
@@ -16,13 +17,13 @@ namespace octet {
 
 	void sendDataToOpenGL()
 	{
-		const float RED_TRIANGLE_Z = 0.5f;   // -1.0 is as close to our face as possible
-		const float BLUE_TRIANGLE_Z = -0.25f; // 0.9  is as far to our face as possible
+		const float RED_TRIANGLE_Z = 0.5f;
+		const float BLUE_TRIANGLE_Z = -0.5f;
 		GLfloat verts[] =  // we define the position of the vertices with this array
 		{
 			-1.0f, -1.0f, RED_TRIANGLE_Z,
 			1.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, -1.0f,
+			0.0f, 1.0f, RED_TRIANGLE_Z,
 			1.0f, 0.0f, 0.0f,
 			1.0f, -1.0f, RED_TRIANGLE_Z,
 			1.0f, 0.0f, 0.0f,
@@ -32,7 +33,7 @@ namespace octet {
 			0.0f, -1.0f, BLUE_TRIANGLE_Z,
 			0.0f, 0.0f, 1.0f,
 			1.0f, 1.0f, BLUE_TRIANGLE_Z,
-			0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 1.0f,
 
 		};
 
@@ -108,7 +109,6 @@ namespace octet {
 		return true;
 	}
 
-	/// 
 	std::string readShaderCode(const char* fileName)
 	{
 		ifstream myInput(fileName);

@@ -2,7 +2,7 @@
 //
 // (C) Andy Thomason 2012-2014 - Modular Framework for OpenGLES2 rendering on multiple platforms.
 //
-// OpenGL Learning Project - 18 - Sending Triangles in Parts Using glBufferSubData
+// OpenGL Learning Project - 17 - Depth Interpolation
 
 
 #include <iostream>
