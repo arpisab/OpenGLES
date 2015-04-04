@@ -12,58 +12,49 @@
 using namespace std;
 
 namespace octet {
-
+	typedef unsigned int uint;
+	const float X_DELTA = 0.1f;
+	const uint NUM_VERTICES_PER_TRI = 3;
+	const uint NUM_FLOATS_PER_VERTICE = 6;
+	const uint TRIANGLE_BYTE_SIZE = NUM_VERTICES_PER_TRI * NUM_FLOATS_PER_VERTICE * sizeof(float);
+	const uint MAX_TRIS = 10;
+	uint numTris = 0;
 
 	void sendDataToOpenGL()
 	{
-		const float RED_TRIANGLE_Z = 0.5f;   // -1.0 is as close to our face as possible
-		const float BLUE_TRIANGLE_Z = -0.25f; // 0.9  is as far to our face as possible
-		GLfloat verts[] =  // we define the position of the vertices with this array
-		{
-			-1.0f, -1.0f, RED_TRIANGLE_Z,
-			1.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, -1.0f,
-			1.0f, 0.0f, 0.0f,
-			1.0f, -1.0f, RED_TRIANGLE_Z,
-			1.0f, 0.0f, 0.0f,
-
-			-1.0f, 1.0f, BLUE_TRIANGLE_Z,
-			0.0f, 0.0f, 1.0f,
-			0.0f, -1.0f, BLUE_TRIANGLE_Z,
-			0.0f, 0.0f, 1.0f,
-			1.0f, 1.0f, BLUE_TRIANGLE_Z,
-			0.0f, 1.0f, 0.0f,
-
-		};
-
 		GLuint vertexBufferID;
-		glGenBuffers(1, &vertexBufferID);  // Creates the Buffer Object - BO
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);  // Binds the buffer to the binding point
+		glGenBuffers(1, &vertexBufferID);  
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID);  
+		glBufferData(GL_ARRAY_BUFFER, MAX_TRIS * TRIANGLE_BYTE_SIZE, NULL, GL_STATIC_DRAW); 
 
-		glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts,
-			GL_STATIC_DRAW);   //  stores the verts array in a array down to the Graphic Card
-
-		glEnableVertexAttribArray(0);  //  enables the attribute atrray or the data that is copied down to the buffer 
-		//  to go throught the process graphic pipeline
-
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0); // this function decribes the data to openGL
-		// position attribute -> zero is the starting point, numb of elements, 
-		// type, normalise (GL_FALSE means don't touch the data),
-		// stride is the distance in bytes between tose vertices 
-		// The pointer tells openGl where we start counting in this case is from zero position 
-
-		/// now we need to describe the colour atttribute to openGL
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0); 
+		
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (char*)(sizeof(float) * 3));
+	}
 
+	void sendAnotherTriToOpenGL()
+	{
+		if (numTris == MAX_TRIS)
+			return;
+		
 
-		/// Below we create Indices to save a vertex for two triangles
-		GLushort indeces[] = { 0, 1, 2, 3, 4, 5 }; // we define how our position are connecte using thir array
-		GLuint indexBufferID;
-		glGenBuffers(1, &indexBufferID);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indeces),
-			indeces, GL_STATIC_DRAW);
+		const GLfloat THIS_TRI_X = -1 + numTris * X_DELTA; // -1 + 0 * 0.1 = -0.1
+		GLfloat thisTris[] =
+		{
+			THIS_TRI_X, 1.0f, 0.0f,             // -1.0, 1.0, 0.0
+			1.0f, 0.0f, 0.0f,
+
+			THIS_TRI_X + X_DELTA, 1.0f, 0.0f,   // -1.0 + 0.1 = -0.9, 1.0, 0.0
+			1.0f, 0.0f, 0.0f,
+
+			THIS_TRI_X, 0.0f, 0.0f,             // -1.0, 0.0, 0.0
+			1.0f, 0.0f, 0.0f
+		};
+		glBufferSubData(GL_ARRAY_BUFFER,
+			numTris * TRIANGLE_BYTE_SIZE, TRIANGLE_BYTE_SIZE, thisTris);
+			numTris++;
 	}
 
 	/// Shader compiler checker - version 02
@@ -175,7 +166,7 @@ namespace octet {
 		/// this is called once OpenGL is initialized
 		void app_init()
 		{
-			glEnable(GL_DEPTH_TEST);
+			
 			sendDataToOpenGL();
 			installShaders();
 
@@ -187,15 +178,19 @@ namespace octet {
 			int vx = 0, vy = 0;
 			get_viewport_size(vx, vy);
 
+			//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			
+			
 
-
-			glClear(GL_DEPTH_BUFFER_BIT);
+			glEnable(GL_DEPTH_TEST);
+			glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 			glViewport(0, 0, vx, vy); // this func. sets what area of the window we want to render, in this case it just makes the window resizeble
+			sendAnotherTriToOpenGL();
 
-			// this func. draws
-			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-
+			//glDrawArrays(GL_TRIANGLES, 3, numTris * NUM_VERTICES_PER_TRI);
+			//glDrawArrays(GL_TRIANGLES, (numTris - 1) * NUM_VERTICES_PER_TRI, NUM_VERTICES_PER_TRI);
+			glDrawArrays(GL_TRIANGLES, 9, NUM_VERTICES_PER_TRI);
 
 		}
 	};
