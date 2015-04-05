@@ -12,7 +12,7 @@
 #include <glm\glm.hpp>
 #include <Primitives\vertex.h>
 #include <Primitives\ShapeGenerator.h>
- 
+
 using namespace std;
 
 namespace octet {
@@ -22,11 +22,11 @@ namespace octet {
 	const uint NUM_FLOATS_PER_VERTICE = 6;
 	const uint TRIANGLE_BYTE_SIZE = NUM_VERTICES_PER_TRI * NUM_FLOATS_PER_VERTICE * sizeof(float);
 
-	
+
 
 	void sendDataToOpenGL()
 	{
-		
+
 		ShapeData tri = ShapeGenerator::makeTriangle();
 
 		GLuint vertexBufferID;
@@ -41,7 +41,7 @@ namespace octet {
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (char*)(sizeof(float) * 3));
 
 		/// Below we create Indices to save a vertex for two triangles
-		
+
 		GLuint indexBufferID;
 		glGenBuffers(1, &indexBufferID);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferID);

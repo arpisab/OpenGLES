@@ -38,6 +38,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Primitives\ShapeGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\helpers\http_server.h">
@@ -430,6 +433,9 @@
     <ClInclude Include="openGL_LearningProject.h" />
     <ClInclude Include="shader_R1.h" />
     <ClInclude Include="shader_R0.h" />
+    <ClInclude Include="Primitives\vertex.h" />
+    <ClInclude Include="Primitives\shapeData.h" />
+    <ClInclude Include="Primitives\ShapeGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\resources\mesh_builder.inl">
