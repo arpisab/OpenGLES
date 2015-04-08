@@ -447,5 +447,6 @@
     <None Include="shader.vs" />
     <None Include="shader.fs" />
     <None Include="shader02.vs" />
+    <None Include="shader03.vs" />
   </ItemGroup>
 </Project>

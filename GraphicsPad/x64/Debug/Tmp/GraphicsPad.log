@@ -1,0 +1,14 @@
+﻿Build started 06/04/2015 22:50:50.
+     1>Project "C:\Graphics\GraphicsPad\GraphicsPad.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /IC:\Graphics\GraphicsPad\..\Middleware\Qt\include /Zi /nologo /W1 /WX- /O2 /Gm- /EHsc /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\Tmp\\" /Fd"x64\Debug\Tmp\vc120.pdb" /Gd /TP /errorReport:prompt Mainer.cpp
+         Mainer.cpp
+     1>CL : warning : Inclusion of header files from include/Qt is deprecated.
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Graphics\GraphicsPad\x64\Debug\GraphicsPad.exe" /NOLOGO /LIBPATH:C:\Graphics\GraphicsPad\..\Middleware\Qt\lib QtCored4.lib QtGuid4.lib QtOpenGLd4.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:"C:\Graphics\GraphicsPad\x64\Debug\GraphicsPad.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Graphics\GraphicsPad\x64\Debug\GraphicsPad.lib" /MACHINE:X64 x64\Debug\Tmp\Mainer.obj
+     1>QtGuid4.lib(QtGuid4.dll) : fatal error LNK1112: module machine type 'X86' conflicts with target machine type 'x64'
+     1>Done Building Project "C:\Graphics\GraphicsPad\GraphicsPad.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.74
