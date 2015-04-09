@@ -1,10 +1,10 @@
-﻿Build started 08/04/2015 22:55:51.
+﻿Build started 09/04/2015 16:16:22.
      1>Project "C:\Users\sab\octet\octet\src\examples\openGL_LearningProject\GraphicsPad\GraphicsPad.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\sab\octet\octet\src\examples\openGL_LearningProject\GraphicsPad\ /IC:\Users\sab\octet\octet\src\examples\openGL_LearningProject\GraphicsPad\..\Middleware\Qt\include /IC:\Users\sab\octet\octet\src\examples\openGL_LearningProject\GraphicsPad\..\Middleware\glew\include /IC:\Users\sab\octet\octet\src\examples\openGL_LearningProject\GraphicsPad\..\Middleware\glm /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\Tmp\\" /Fd"Debug\Tmp\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Mainer.cpp MeGlWindow.cpp shader_R02.cpp Primitives\ShapeGenerator.cpp
-         ShapeGenerator.cpp
-         shader_R02.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\sab\octet\octet\src\examples\openGL_LearningProject\GraphicsPad\ /IC:\Users\sab\octet\octet\src\examples\openGL_LearningProject\GraphicsPad\..\Middleware\Qt\include /IC:\Users\sab\octet\octet\src\examples\openGL_LearningProject\GraphicsPad\..\Middleware\glew\include /IC:\Users\sab\octet\octet\src\examples\openGL_LearningProject\GraphicsPad\..\Middleware\glm /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\Tmp\\" /Fd"Debug\Tmp\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Mainer.cpp MeGlWindow.cpp
          MeGlWindow.cpp
+         Generating Code...
+         Compiling...
          Mainer.cpp
      1>CL : warning : Inclusion of header files from include/Qt is deprecated.
          Generating Code...
@@ -18,4 +18,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.25
+Time Elapsed 00:00:03.90

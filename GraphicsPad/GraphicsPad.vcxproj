@@ -38,6 +38,7 @@
     <None Include="shader_R03.vs" />
     <None Include="shader_R04.vs" />
     <None Include="shader_R05.vs" />
+    <None Include="shader_R06.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A3743A61-9AC6-4E16-9854-5B5E73CA911F}</ProjectGuid>

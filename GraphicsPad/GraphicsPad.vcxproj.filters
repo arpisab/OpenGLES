@@ -20,5 +20,6 @@
     <None Include="shader_R03.vs" />
     <None Include="shader_R04.vs" />
     <None Include="shader_R05.vs" />
+    <None Include="shader_R06.vs" />
   </ItemGroup>
 </Project>

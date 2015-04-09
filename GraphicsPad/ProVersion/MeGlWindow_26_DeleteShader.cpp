@@ -11,7 +11,6 @@
 #include <MeGlWindow.h>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
-#include <glm\gtx\transform.hpp>
 #include <Primitives\vertex.h>
 #include <Primitives\ShapeGenerator.h>
 using namespace std;
@@ -52,7 +51,7 @@ void MeGlWindow::paintGL()
 {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height()); // the triangle reshape according with the size of the window
-	
+
 	// Matrix Tranformation
 	//
 	//-> The order matters! projection * traslation * rotation * vector
@@ -64,15 +63,15 @@ void MeGlWindow::paintGL()
 
 	GLint fullTransformMatrixUniformLocation =
 		glGetUniformLocation(programID, "fullTransformMatrix");
-	
+
 	glUniformMatrix4fv(fullTransformMatrixUniformLocation, 1,
 		GL_FALSE, &fullTransformMatrix[0][0]);
 	// [0] first vector of the metrix; 
 	// [0] first entry of the vector that returns a reference to a float "&modelTransformMatrix"
 	// that we can take an address of. [0][0] this would be the first float of a sequence of 16 (CUBE)
-	
+
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
-	
+
 }
 
 bool checkStatus(
@@ -83,20 +82,20 @@ bool checkStatus(
 {
 	GLint status;
 	objectPropertyGetter(objectID, statusType, &status);  //GLGetShaderiv - iv stands for integer vector
-		if (status != GL_TRUE)
-		{
-			GLint infoLogLenght;
-			objectPropertyGetter(objectID, GL_INFO_LOG_LENGTH, &infoLogLenght);
-			GLchar* buffer = new GLchar[infoLogLenght];
+	if (status != GL_TRUE)
+	{
+		GLint infoLogLenght;
+		objectPropertyGetter(objectID, GL_INFO_LOG_LENGTH, &infoLogLenght);
+		GLchar* buffer = new GLchar[infoLogLenght];
 
-			GLsizei bufferSize;
-			getInfoLogFunc(objectID, infoLogLenght, &bufferSize, buffer); // glGetShaderInfoLog will write the error message out of the buffer
-			cout << buffer << endl;
+		GLsizei bufferSize;
+		getInfoLogFunc(objectID, infoLogLenght, &bufferSize, buffer); // glGetShaderInfoLog will write the error message out of the buffer
+		cout << buffer << endl;
 
-			delete[] buffer;
-			return false;
-		}
-		return true;
+		delete[] buffer;
+		return false;
+	}
+	return true;
 }
 
 bool chekShaderStatus(GLuint shaderID)
@@ -104,7 +103,7 @@ bool chekShaderStatus(GLuint shaderID)
 	return checkStatus(shaderID, glGetShaderiv, glGetShaderInfoLog, GL_COMPILE_STATUS);
 }
 
-bool chekProgramStatus(GLuint programID) 
+bool chekProgramStatus(GLuint programID)
 {
 	return checkStatus(programID, glGetProgramiv, glGetProgramInfoLog, GL_LINK_STATUS);
 }
