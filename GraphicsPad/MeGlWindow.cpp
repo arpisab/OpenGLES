@@ -11,7 +11,7 @@
 #include <MeGlWindow.h>
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
-#include <glm\gtx\transform.hpp>
+#include <glm\gtx\transform.hpp> // this supports the matrices
 #include <Primitives\vertex.h>
 #include <Primitives\ShapeGenerator.h>
 using namespace std;
@@ -52,25 +52,35 @@ void MeGlWindow::paintGL()
 {
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 	glViewport(0, 0, width(), height()); // the triangle reshape according with the size of the window
-	
+
+	GLint fullTransformMatrixUniformLocation =
+		glGetUniformLocation(programID, "fullTransformMatrix");
+
+	mat4 fullTransformMatrix;
 	// Matrix Tranformation
 	//
 	//-> The order matters! projection * traslation * rotation * vector
 	// 1th - rotation * vector; 2nd - traslation * vector; 3rd - projection * vector
 	mat4 projectionMatrix = glm::perspective(58.0f, ((float)width()) / height(), 0.1f, 10.0f);
-	mat4 projectionTranslationMatrix = glm::translate(projectionMatrix, vec3(0.0f, 0.0f, -3.0f));
-	mat4 fullTransformMatrix = glm::rotate(projectionTranslationMatrix, 54.0f, vec3(1.0f, 0.0f, 0.0f));
-
-
-	GLint fullTransformMatrixUniformLocation =
-		glGetUniformLocation(programID, "fullTransformMatrix");
 	
+	// CUBE 1
+	mat4 translationMatrix = glm::translate(vec3(-1.0f, 0.0f, -3.0f));
+	mat4 rotationMatrix = glm::rotate(50.0f, vec3(1.0f, 0.0f, 0.0f));
+
+	fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
+
 	glUniformMatrix4fv(fullTransformMatrixUniformLocation, 1,
 		GL_FALSE, &fullTransformMatrix[0][0]);
-	// [0] first vector of the metrix; 
-	// [0] first entry of the vector that returns a reference to a float "&modelTransformMatrix"
-	// that we can take an address of. [0][0] this would be the first float of a sequence of 16 (CUBE)
-	
+	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
+
+	// CUBE 2
+	translationMatrix = glm::translate(vec3(1.0f, 0.0f, -3.75f));
+	rotationMatrix = glm::rotate(1.0f, vec3(0.0f, 1.0f, 0.0f));
+
+	fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
+
+	glUniformMatrix4fv(fullTransformMatrixUniformLocation, 1,
+		GL_FALSE, &fullTransformMatrix[0][0]);
 	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
 	
 }
