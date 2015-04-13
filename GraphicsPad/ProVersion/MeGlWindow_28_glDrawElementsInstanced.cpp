@@ -1,8 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Instancing
-// Shows OpenGL instanced rendering. This instanced example drawing tutorial renders 
-// the same cube geometry using two different uniform matrix shader arguments. 
+// glDrawElementsInstanced
+// Performs instanced rendering by using glDrawElementsInstanced and glVertexAttribDivisor. 
+// glDrawArrayInstanced works in a similar fashion using glVertexAttribDivisor to instance 
+// geometries and triangles. 
 // 
 
 #include <GL\glew.h>
@@ -24,29 +25,38 @@ const uint VERTEX_BYTE_SIZE = NUM_FLOATS_PER_VERTICE * sizeof(float);
 GLuint programID;
 GLint numIndices;
 
-
-
 void sendDataToOpenGL()
 {
-	shapeData shape = ShapeGenerator::makeCube();
+	GLfloat tri[] = {
+		-1.0f, +0.0f,
+		-1.0f, +1.0f,
+		-0.9f, +0.0f,
+	};
 
 	GLuint vertexBufferID;
 	glGenBuffers(1, &vertexBufferID); // generates the Buffer Objects and stores the ID that reprensents the BO to myBufferID. Thinks about a penGL pointer
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferID); // creates a binding point for the bufferID
-	glBufferData(GL_ARRAY_BUFFER, shape.vertexBufferSize(), shape.vertices, GL_STATIC_DRAW);  // send the data that is bound to the GL_ARRAY_BUFFER binding point, down to openGL
+	glBufferData(GL_ARRAY_BUFFER, sizeof(tri), tri, GL_STATIC_DRAW);  // send the data that is bound to the GL_ARRAY_BUFFER binding point, down to openGL
 	glEnableVertexAttribArray(0); // enable the data that we copied down to buffer (verts array)to go to graphic process pipeline	
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // here we describe the data (verts array) to openGL
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0); // here we describe the data (verts array) to openGL
 
+	GLfloat offsets[] = { 0.0f, 0.5f, 1.0f, 1.2f, 1.6f };
+	GLuint offsetBufferID;
+	glGenBuffers(1, &offsetBufferID);
+	glBindBuffer(GL_ARRAY_BUFFER, offsetBufferID);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(offsets), offsets, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribDivisor(1, 1);
+
+
+	GLushort indices[] = { 0, 1, 2 };
 	GLuint indexArrayBufferID;
 	glGenBuffers(1, &indexArrayBufferID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexArrayBufferID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, shape.indexBufferSize(), shape.indices, GL_STATIC_DRAW);
-	numIndices = shape.numIndices;
-	shape.cleanup();
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	numIndices = 3;
 }
-
 
 void MeGlWindow::paintGL()
 {
@@ -56,32 +66,7 @@ void MeGlWindow::paintGL()
 	GLint fullTransformMatrixUniformLocation =
 		glGetUniformLocation(programID, "fullTransformMatrix");
 
-	mat4 fullTransformMatrix;
-	// Matrix Tranformation
-	//
-	//-> The order matters! projection * traslation * rotation * vector
-	// 1th - rotation * vector; 2nd - traslation * vector; 3rd - projection * vector
-	mat4 projectionMatrix = glm::perspective(58.0f, ((float)width()) / height(), 0.1f, 10.0f);
-
-	// CUBE 1
-	mat4 translationMatrix = glm::translate(vec3(-1.0f, 0.0f, -3.0f));
-	mat4 rotationMatrix = glm::rotate(50.0f, vec3(1.0f, 0.0f, 0.0f));
-
-	fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
-
-	glUniformMatrix4fv(fullTransformMatrixUniformLocation, 1,
-		GL_FALSE, &fullTransformMatrix[0][0]);
-	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
-
-	// CUBE 2
-	translationMatrix = glm::translate(vec3(1.0f, 0.0f, -3.75f));
-	rotationMatrix = glm::rotate(1.0f, vec3(0.0f, 1.0f, 0.0f));
-
-	fullTransformMatrix = projectionMatrix * translationMatrix * rotationMatrix;
-
-	glUniformMatrix4fv(fullTransformMatrixUniformLocation, 1,
-		GL_FALSE, &fullTransformMatrix[0][0]);
-	glDrawElements(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0);
+	glDrawElementsInstanced(GL_TRIANGLES, numIndices, GL_UNSIGNED_SHORT, 0, 5);
 
 }
 
@@ -138,10 +123,10 @@ void installShaders()
 	GLuint fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
 
 	const char* adapter[1];
-	string temp = readShaderCode("shader_R06.vs");
+	string temp = readShaderCode("Shaders/shader_R07.vs");
 	adapter[0] = temp.c_str();
 	glShaderSource(vertexShaderID, 1, adapter, 0);  // here we send the shader down to the graphic card 
-	temp = readShaderCode("shader_R01.fs");
+	temp = readShaderCode("Shaders/shader_R01.fs");
 	adapter[0] = temp.c_str();
 	glShaderSource(fragmentShaderID, 1, adapter, 0);
 

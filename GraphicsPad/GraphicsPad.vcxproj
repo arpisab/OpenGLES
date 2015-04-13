@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Mainer.cpp" />
     <ClCompile Include="MeGlWindow.cpp" />
-    <ClCompile Include="shader_R02.cpp" />
+    <ClCompile Include="Shaders\shader_R01.cpp" />
     <ClCompile Include="Primitives\ShapeGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -32,13 +32,14 @@
     <ClInclude Include="Primitives\ShapeGenerator.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader_R01.fs" />
-    <None Include="shader_R01.vs" />
-    <None Include="shader_R02.vs" />
-    <None Include="shader_R03.vs" />
-    <None Include="shader_R04.vs" />
-    <None Include="shader_R05.vs" />
-    <None Include="shader_R06.vs" />
+    <None Include="Shaders\shader_R01.fs" />
+    <None Include="Shaders\shader_R01.vs" />
+    <None Include="Shaders\shader_R02.vs" />
+    <None Include="Shaders\shader_R03.vs" />
+    <None Include="Shaders\shader_R04.vs" />
+    <None Include="Shaders\shader_R05.vs" />
+    <None Include="Shaders\shader_R06.vs" />
+    <None Include="Shaders\shader_R07.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A3743A61-9AC6-4E16-9854-5B5E73CA911F}</ProjectGuid>

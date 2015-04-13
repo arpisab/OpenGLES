@@ -3,8 +3,8 @@
   <ItemGroup>
     <ClCompile Include="Mainer.cpp" />
     <ClCompile Include="MeGlWindow.cpp" />
-    <ClCompile Include="shader_R02.cpp" />
     <ClCompile Include="Primitives\ShapeGenerator.cpp" />
+    <ClCompile Include="Shaders\shader_R01.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MeGlWindow.h" />
@@ -14,12 +14,13 @@
     <ClInclude Include="Primitives\TeapotData.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader_R01.vs" />
-    <None Include="shader_R01.fs" />
-    <None Include="shader_R02.vs" />
-    <None Include="shader_R03.vs" />
-    <None Include="shader_R04.vs" />
-    <None Include="shader_R05.vs" />
-    <None Include="shader_R06.vs" />
+    <None Include="Shaders\shader_R02.vs" />
+    <None Include="Shaders\shader_R03.vs" />
+    <None Include="Shaders\shader_R04.vs" />
+    <None Include="Shaders\shader_R05.vs" />
+    <None Include="Shaders\shader_R06.vs" />
+    <None Include="Shaders\shader_R01.vs" />
+    <None Include="Shaders\shader_R01.fs" />
+    <None Include="Shaders\shader_R07.vs" />
   </ItemGroup>
 </Project>
