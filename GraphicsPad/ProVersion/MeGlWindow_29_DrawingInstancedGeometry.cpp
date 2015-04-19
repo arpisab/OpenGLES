@@ -36,7 +36,7 @@ void MeGlWindow::sendDataToOpenGL()
 	glBufferData(GL_ARRAY_BUFFER, shape.vertexBufferSize(), shape.vertices, GL_STATIC_DRAW);  // send the data that is bound to the GL_ARRAY_BUFFER binding point, down to openGL
 	glEnableVertexAttribArray(0); // enable the data that we copied down to buffer (verts array)to go to graphic process pipeline	
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, 0); // here we describe the data (verts array) to openGL
-	
+
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, VERTEX_BYTE_SIZE, (char*)(sizeof(float) * 3));
 
@@ -55,7 +55,7 @@ void MeGlWindow::sendDataToOpenGL()
 	mat4 fullTransforms[] =
 	{
 		projectionMatrix * glm::translate(vec3(-1.0f, 0.0f, -3.0f)) * glm::rotate(50.0f, vec3(1.0f, 0.0f, 0.0f)),
-		projectionMatrix * glm::translate(vec3(1.0f, 0.0f, -3.75f)) * glm::rotate( 1.0f, vec3(0.0f, 1.0f, 0.0f)),
+		projectionMatrix * glm::translate(vec3(1.0f, 0.0f, -3.75f)) * glm::rotate(1.0f, vec3(0.0f, 1.0f, 0.0f)),
 	};
 	glBufferData(GL_ARRAY_BUFFER, sizeof(fullTransforms), fullTransforms, GL_STATIC_DRAW);
 	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void*)(sizeof(float) * 0));
