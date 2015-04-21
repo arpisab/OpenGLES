@@ -1,10 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// glGetAttribLocation glBindAttribLocation
-// An example of using glBindAttribLocation and glGetAttribLocation to determine 
-// and query OpenGL as to where the varying vertex data locations are. 
-// This is an alternative to using layout and location in the GLSL shader code.
-// 
+// Camera Tutorial
+// OpenGL tutorial on writing a camera.
+//
+//
 
 #include <GL\glew.h>
 #include <iostream>
@@ -53,7 +52,7 @@ void MeGlWindow::sendDataToOpenGL()
 	glBindBuffer(GL_ARRAY_BUFFER, transformationMatrixBufferID);
 
 	mat4 projectionMatrix = glm::perspective(58.0f, ((float)width()) / height(), 0.1f, 10.0f);
-	
+
 	mat4 fullTransforms[] =
 	{
 		projectionMatrix * camera.getWorldToViewMatrix() * glm::translate(vec3(-1.0f, 0.0f, -3.0f)) * glm::rotate(10.0f, vec3(1.0f, 0.0f, 0.0f)),
