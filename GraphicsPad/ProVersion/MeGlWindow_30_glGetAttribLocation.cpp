@@ -1,8 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 //
-// Drawing Instanced Geometry
-// Shows drawing instanced geometry in OpenGL using 
-// glVertexAttribDivisor and glDrawElementsInstanced.
+// glGetAttribLocation glBindAttribLocation
+// An example of using glBindAttribLocation and glGetAttribLocation to determine 
+// and query OpenGL as to where the varying vertex data locations are. 
+// This is an alternative to using layout and location in the GLSL shader code.
 // 
 
 #include <GL\glew.h>
@@ -55,7 +56,7 @@ void MeGlWindow::sendDataToOpenGL()
 	mat4 fullTransforms[] =
 	{
 		projectionMatrix * glm::translate(vec3(-1.0f, 0.0f, -3.0f)) * glm::rotate(50.0f, vec3(1.0f, 0.0f, 0.0f)),
-		projectionMatrix * glm::translate(vec3(1.0f, 0.0f, -3.75f)) * glm::rotate(1.0f, vec3(0.0f, 1.0f, 0.0f)),
+		projectionMatrix * glm::translate(vec3(1.0f, 0.0f, -3.75f)) * glm::rotate(1.0f, vec3(0.0f, 1.0f, 0.0f))
 	};
 	glBufferData(GL_ARRAY_BUFFER, sizeof(fullTransforms), fullTransforms, GL_STATIC_DRAW);
 	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, sizeof(mat4), (void*)(sizeof(float) * 0));
