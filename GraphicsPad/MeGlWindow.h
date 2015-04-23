@@ -19,6 +19,7 @@ class MeGlWindow : public QGLWidget
 protected:
 	void initializeGL();
 	void paintGL();
+	void mouseMoveEvent(QMouseEvent*);
 public:
 
 	// Remember that I applied the destractor from video 26
